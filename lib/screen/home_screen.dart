@@ -11,17 +11,34 @@ class HomeScreen extends ConsumerWidget {
     final cart = ref.watch(cartProvider);
     final cartNotifier = ref.read(cartProvider.notifier);
 
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    
+    final crossAxisCount = screenWidth > 600 ? 3 : 2; 
+    final childAspectRatio = screenWidth / (screenHeight / 1.5);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Catalogue',
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
-        backgroundColor: Colors.white,
+        title: Text(
+          'Catalogue',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: screenWidth * 0.067, 
+          ),
+        ),
+        backgroundColor: Colors.pink[50],
+        centerTitle: true,
         elevation: 1,
         actions: [
           Stack(
             children: [
               IconButton(
-                icon: const Icon(Icons.shopping_cart, color: Colors.black),
+                icon: Icon(
+                  Icons.shopping_cart_outlined,
+                  color: Colors.black,
+                  size: screenWidth * 0.07, 
+                ),
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => CartScreen()));
@@ -29,14 +46,17 @@ class HomeScreen extends ConsumerWidget {
               ),
               if (cart.isNotEmpty)
                 Positioned(
-                  right: 5,
-                  top: 5,
+                  right: screenWidth * 0.016,
+                  top: screenWidth * 0.013,
                   child: CircleAvatar(
                     backgroundColor: Colors.red,
-                    radius: 8,
+                    radius: screenWidth * 0.02, 
                     child: Text(
                       cart.length.toString(),
-                      style: const TextStyle(fontSize: 10, color: Colors.white),
+                      style: TextStyle(
+                        fontSize: screenWidth * 0.03, 
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -44,22 +64,22 @@ class HomeScreen extends ConsumerWidget {
           ),
         ],
       ),
-      backgroundColor: Colors.pink[50], // Light pink background
+      backgroundColor: Colors.pink[50], 
       body: productAsyncValue.when(
         data: (products) {
           return GridView.builder(
-            padding: const EdgeInsets.all(8),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, // Two items per row
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              childAspectRatio: 0.65, // Adjust height-to-width ratio
+            padding: EdgeInsets.all(screenWidth * 0.02), 
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: crossAxisCount, 
+              crossAxisSpacing: screenWidth * 0.02, 
+              mainAxisSpacing: screenWidth * 0.02, 
+              childAspectRatio: childAspectRatio, 
             ),
             itemCount: products.length,
             itemBuilder: (context, index) {
               final product = products[index];
               final isInCart = cart.any(
-                  (p) => p.id == product.id); // Check if product is in cart
+                  (p) => p.id == product.id); 
 
               return GestureDetector(
                 onTap: () {
@@ -73,7 +93,7 @@ class HomeScreen extends ConsumerWidget {
                 child: Card(
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12)),
+                      borderRadius: BorderRadius.circular(screenWidth * 0.03)),
                   elevation: 3,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,74 +101,96 @@ class HomeScreen extends ConsumerWidget {
                       Stack(
                         children: [
                           ClipRRect(
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(12),
-                              topRight: Radius.circular(12),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(screenWidth * 0.03),
+                              topRight: Radius.circular(screenWidth * 0.03),
                             ),
                             child: Image.network(
                               product.thumbnail,
                               width: double.infinity,
-                              height: 120, // Fixed height for uniformity
+                              height: screenHeight * 0.15, 
                               fit: BoxFit.cover,
                             ),
                           ),
                           Positioned(
-                            top: 8,
-                            right: 8,
+                            top: screenWidth * 0.02,
+                            right: screenWidth * 0.02,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.red,
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 5),
-                                minimumSize: const Size(40, 30),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth * 0.03,
+                                  vertical: screenWidth * 0.01,
+                                ),
+                                minimumSize: Size(
+                                  screenWidth * 0.1,
+                                  screenWidth * 0.05,
+                                ), 
                               ),
                               onPressed: isInCart
-                                  ? null // Disable button if already in cart
+                                  ? null 
                                   : () => cartNotifier.addToCart(product),
-                              child: const Text("Add",
-                                  style: TextStyle(
-                                      fontSize: 12, color: Colors.white)),
+                              child: Text(
+                                "Add",
+                                style: TextStyle(
+                                  fontSize: screenWidth * 0.03, 
+                                  color: Colors.white,
+                                ),
+                              ),
                             ),
                           ),
                         ],
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth * 0.02,
+                          vertical: screenWidth * 0.01,
+                        ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(product.title,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold)),
-                            Text(product.brand,
-                                style: const TextStyle(
-                                    color: Colors.grey, fontSize: 12)),
-                            const SizedBox(height: 4),
+                            Text(
+                              product.title,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: screenWidth * 0.042, 
+                              ),
+                            ),
+                            SizedBox(height: screenWidth * 0.01), 
+                            Text(
+                              product.brand,
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: screenWidth * 0.032, 
+                              ),
+                            ),
+                            SizedBox(height: screenWidth * 0.02), 
                             Row(
                               children: [
                                 Text(
                                   "₹${product.price.toStringAsFixed(2)}",
-                                  style: const TextStyle(
-                                    fontSize: 14,
+                                  style: TextStyle(
+                                    fontSize: screenWidth * 0.035, 
                                     color: Colors.grey,
-                                    decoration: TextDecoration
-                                        .lineThrough, // Strike-through original price
+                                    decoration: TextDecoration.lineThrough,
                                   ),
                                 ),
-                                const SizedBox(width: 5),
+                                SizedBox(width: screenWidth * 0.01), 
                                 Text(
                                   "₹${product.discountedPrice.toStringAsFixed(2)}",
-                                  style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontSize: screenWidth * 0.04, 
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ],
                             ),
                             Text(
                               "${product.discountPercentage}% OFF",
-                              style: const TextStyle(
-                                  color: Colors.red, fontSize: 12),
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: screenWidth * 0.03, 
+                              ),
                             ),
                           ],
                         ),
