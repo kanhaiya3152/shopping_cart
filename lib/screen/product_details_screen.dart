@@ -14,9 +14,19 @@ class ProductDetailsScreen extends ConsumerWidget {
     final cart = ref.watch(cartProvider);
     final isInCart = cart.any((p) => p.id == product.id);
 
+    // Get screen dimensions
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(product.title, style: const TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(
+          product.title,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: screenWidth * 0.05, // Responsive font size
+          ),
+        ),
         backgroundColor: Colors.white,
         elevation: 1,
       ),
@@ -31,20 +41,25 @@ class ProductDetailsScreen extends ConsumerWidget {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 250,
+                    height: screenHeight * 0.3, // Responsive height
                     width: double.infinity,
                     child: Image.network(product.thumbnail, fit: BoxFit.cover),
                   ),
                   SizedBox(
-                    height: 80,
+                    height: screenHeight * 0.1, // Responsive height
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: product.images.map((image) {
                         return Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(screenWidth * 0.02), // Responsive padding
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.network(image, width: 70, height: 70, fit: BoxFit.cover),
+                            borderRadius: BorderRadius.circular(screenWidth * 0.02), // Responsive border radius
+                            child: Image.network(
+                              image,
+                              width: screenWidth * 0.15, // Responsive width
+                              height: screenWidth * 0.15, // Responsive height
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         );
                       }).toList(),
@@ -56,62 +71,117 @@ class ProductDetailsScreen extends ConsumerWidget {
 
             // Product Details
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(screenWidth * 0.04), // Responsive padding
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(product.title, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 5),
-                  Text("Brand: ${product.brand}", style: const TextStyle(fontSize: 16, color: Colors.grey)),
-                  Text("Category: ${product.category}", style: const TextStyle(fontSize: 16, color: Colors.grey)),
+                  Text(
+                    product.title,
+                    style: TextStyle(
+                      fontSize: screenWidth * 0.06, // Responsive font size
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: screenWidth * 0.02), // Responsive spacing
+                  Text(
+                    "Brand: ${product.brand}",
+                    style: TextStyle(
+                      fontSize: screenWidth * 0.04, // Responsive font size
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Text(
+                    "Category: ${product.category}",
+                    style: TextStyle(
+                      fontSize: screenWidth * 0.04, // Responsive font size
+                      color: Colors.grey,
+                    ),
+                  ),
 
-                  const SizedBox(height: 10),
+                  SizedBox(height: screenWidth * 0.03), // Responsive spacing
                   Row(
                     children: [
                       Text(
                         "₹${product.price.toStringAsFixed(2)}",
-                        style: const TextStyle(fontSize: 16, color: Colors.grey, decoration: TextDecoration.lineThrough),
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.04, // Responsive font size
+                          color: Colors.grey,
+                          decoration: TextDecoration.lineThrough,
+                        ),
                       ),
-                      const SizedBox(width: 8),
+                      SizedBox(width: screenWidth * 0.02), // Responsive spacing
                       Text(
                         "₹${product.discountedPrice.toStringAsFixed(2)}",
-                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.05, // Responsive font size
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      const SizedBox(width: 8),
-                      Text("${product.discountPercentage}% OFF", style: const TextStyle(fontSize: 16, color: Colors.red)),
+                      SizedBox(width: screenWidth * 0.02), // Responsive spacing
+                      Text(
+                        "${product.discountPercentage}% OFF",
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.04, // Responsive font size
+                          color: Colors.red,
+                        ),
+                      ),
                     ],
                   ),
 
-                  const SizedBox(height: 10),
+                  SizedBox(height: screenWidth * 0.03), // Responsive spacing
                   Row(
                     children: [
-                      const Icon(Icons.star, color: Colors.amber, size: 20),
-                      Text("${product.rating}", style: const TextStyle(fontSize: 16)),
+                      Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                        size: screenWidth * 0.05, // Responsive icon size
+                      ),
+                      Text(
+                        "${product.rating}",
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.04, // Responsive font size
+                        ),
+                      ),
                       const Spacer(),
                       Text(
                         product.stock > 0 ? "In Stock (${product.stock} left)" : "Out of Stock",
-                        style: TextStyle(fontSize: 16, color: product.stock > 0 ? Colors.green : Colors.red),
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.04, // Responsive font size
+                          color: product.stock > 0 ? Colors.green : Colors.red,
+                        ),
                       ),
                     ],
                   ),
 
-                  const Divider(height: 30, color: Colors.grey),
+                  Divider(
+                    height: screenWidth * 0.08, // Responsive height
+                    color: Colors.grey,
+                  ),
 
                   // Additional Information
-                  _buildInfoRow("Weight", "${product.weight} kg"),
-                  _buildInfoRow("Warranty", product.warrantyInformation),
-                  _buildInfoRow("Shipping", product.shippingInformation),
-                  _buildInfoRow("Availability", product.availabilityStatus),
-                  _buildInfoRow("Return Policy", product.returnPolicy),
+                  _buildInfoRow("Weight", "${product.weight} kg", screenWidth),
+                  _buildInfoRow("Warranty", product.warrantyInformation, screenWidth),
+                  _buildInfoRow("Shipping", product.shippingInformation, screenWidth),
+                  _buildInfoRow("Availability", product.availabilityStatus, screenWidth),
+                  _buildInfoRow("Return Policy", product.returnPolicy, screenWidth),
 
-                  const SizedBox(height: 20),
+                  SizedBox(height: screenWidth * 0.05), // Responsive spacing
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
-                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                      padding: EdgeInsets.symmetric(
+                        vertical: screenWidth * 0.03, // Responsive vertical padding
+                        horizontal: screenWidth * 0.1, // Responsive horizontal padding
+                      ),
                     ),
                     onPressed: isInCart ? null : () => cartNotifier.addToCart(product),
-                    child: Text(isInCart ? "Already in Cart" : "Add to Cart", style: const TextStyle(color: Colors.white)),
+                    child: Text(
+                      isInCart ? "Already in Cart" : "Add to Cart",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: screenWidth * 0.045, // Responsive font size
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -123,14 +193,26 @@ class ProductDetailsScreen extends ConsumerWidget {
   }
 
   // Helper method for additional info rows
-  Widget _buildInfoRow(String title, String value) {
+  Widget _buildInfoRow(String title, String value, double screenWidth) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: EdgeInsets.symmetric(vertical: screenWidth * 0.01), // Responsive padding
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          Text(value, style: const TextStyle(fontSize: 16, color: Colors.grey)),
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: screenWidth * 0.04, // Responsive font size
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: screenWidth * 0.04, // Responsive font size
+              color: Colors.grey,
+            ),
+          ),
         ],
       ),
     );
