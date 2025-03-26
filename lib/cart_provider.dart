@@ -38,6 +38,10 @@ class CartNotifier extends StateNotifier<List<Product>> {
         .toList();
   }
 
+  void clearCart() {
+    state = []; // Set the cart to an empty list
+  }
+
   double get totalPrice => state.fold(
         0,
         (sum, item) => sum + (item.discountedPrice * item.quantity),

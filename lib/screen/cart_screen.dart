@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shopping_cart/product_model.dart';
-import 'package:shopping_cart/provider.dart';
+import 'package:shopping_cart/cart_provider.dart';
 
 class CartScreen extends ConsumerWidget {
   @override
@@ -186,7 +186,9 @@ class CartScreen extends ConsumerWidget {
                     ),
                   ),
                   onPressed: () {
-                    // Checkout logic here
+                    if (cart.isNotEmpty) {
+                      _showCheckoutDialog(context, cartNotifier);
+                    }
                   },
                   child: Text(
                     "Check Out (${cart.length})",
@@ -201,6 +203,35 @@ class CartScreen extends ConsumerWidget {
           ),
         ],
       ),
+    );
+  }
+
+  // Function to show a confirmation dialog before checkout
+  void _showCheckoutDialog(BuildContext context, CartNotifier cartNotifier) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Confirm Checkout"),
+          content: const Text("Are you sure you want to checkout?"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () {
+                cartNotifier.clearCart(); // Clear the cart
+                Navigator.pop(context); // Close the dialog
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Checkout successful! Your cart is now empty.")),
+                );
+              },
+              child: const Text("Yes, Checkout"),
+            ),
+          ],
+        );
+      },
     );
   }
 }

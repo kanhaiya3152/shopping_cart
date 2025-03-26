@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shopping_cart/screen/home_screen.dart';
 
 void main() {
-  runApp(const ProviderScope(child: MyApp())); // ✅ Wrap with ProviderScope
+  runApp(const ProviderScope(child: MyApp())); 
 }
 
 class MyApp extends StatelessWidget {

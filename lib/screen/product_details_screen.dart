@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shopping_cart/product_model.dart';
-import 'package:shopping_cart/provider.dart';
+import 'package:shopping_cart/cart_provider.dart';
 
 class ProductDetailsScreen extends ConsumerWidget {
   final Product product;
@@ -69,84 +69,83 @@ class ProductDetailsScreen extends ConsumerWidget {
               ),
             ),
 
-            // Product Details
             Padding(
-              padding: EdgeInsets.all(screenWidth * 0.04), // Responsive padding
+              padding: EdgeInsets.all(screenWidth * 0.04), 
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     product.title,
                     style: TextStyle(
-                      fontSize: screenWidth * 0.06, // Responsive font size
+                      fontSize: screenWidth * 0.06, 
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: screenWidth * 0.02), // Responsive spacing
+                  SizedBox(height: screenWidth * 0.02), 
                   Text(
                     "Brand: ${product.brand}",
                     style: TextStyle(
-                      fontSize: screenWidth * 0.04, // Responsive font size
+                      fontSize: screenWidth * 0.04,
                       color: Colors.grey,
                     ),
                   ),
                   Text(
                     "Category: ${product.category}",
                     style: TextStyle(
-                      fontSize: screenWidth * 0.04, // Responsive font size
+                      fontSize: screenWidth * 0.04, 
                       color: Colors.grey,
                     ),
                   ),
 
-                  SizedBox(height: screenWidth * 0.03), // Responsive spacing
+                  SizedBox(height: screenWidth * 0.03), 
                   Row(
                     children: [
                       Text(
                         "₹${product.price.toStringAsFixed(2)}",
                         style: TextStyle(
-                          fontSize: screenWidth * 0.04, // Responsive font size
+                          fontSize: screenWidth * 0.04, 
                           color: Colors.grey,
                           decoration: TextDecoration.lineThrough,
                         ),
                       ),
-                      SizedBox(width: screenWidth * 0.02), // Responsive spacing
+                      SizedBox(width: screenWidth * 0.02), 
                       Text(
                         "₹${product.discountedPrice.toStringAsFixed(2)}",
                         style: TextStyle(
-                          fontSize: screenWidth * 0.05, // Responsive font size
+                          fontSize: screenWidth * 0.05, 
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(width: screenWidth * 0.02), // Responsive spacing
+                      SizedBox(width: screenWidth * 0.02), 
                       Text(
                         "${product.discountPercentage}% OFF",
                         style: TextStyle(
-                          fontSize: screenWidth * 0.04, // Responsive font size
+                          fontSize: screenWidth * 0.04, 
                           color: Colors.red,
                         ),
                       ),
                     ],
                   ),
 
-                  SizedBox(height: screenWidth * 0.03), // Responsive spacing
+                  SizedBox(height: screenWidth * 0.03), 
                   Row(
                     children: [
                       Icon(
                         Icons.star,
                         color: Colors.amber,
-                        size: screenWidth * 0.05, // Responsive icon size
+                        size: screenWidth * 0.05, 
                       ),
                       Text(
                         "${product.rating}",
                         style: TextStyle(
-                          fontSize: screenWidth * 0.04, // Responsive font size
+                          fontSize: screenWidth * 0.04, 
                         ),
                       ),
                       const Spacer(),
                       Text(
                         product.stock > 0 ? "In Stock (${product.stock} left)" : "Out of Stock",
                         style: TextStyle(
-                          fontSize: screenWidth * 0.04, // Responsive font size
+                          fontSize: screenWidth * 0.04, 
                           color: product.stock > 0 ? Colors.green : Colors.red,
                         ),
                       ),
@@ -154,32 +153,33 @@ class ProductDetailsScreen extends ConsumerWidget {
                   ),
 
                   Divider(
-                    height: screenWidth * 0.08, // Responsive height
+                    height: screenWidth * 0.08, 
                     color: Colors.grey,
                   ),
 
-                  // Additional Information
                   _buildInfoRow("Weight", "${product.weight} kg", screenWidth),
                   _buildInfoRow("Warranty", product.warrantyInformation, screenWidth),
                   _buildInfoRow("Shipping", product.shippingInformation, screenWidth),
                   _buildInfoRow("Availability", product.availabilityStatus, screenWidth),
                   _buildInfoRow("Return Policy", product.returnPolicy, screenWidth),
 
-                  SizedBox(height: screenWidth * 0.05), // Responsive spacing
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                      padding: EdgeInsets.symmetric(
-                        vertical: screenWidth * 0.03, // Responsive vertical padding
-                        horizontal: screenWidth * 0.1, // Responsive horizontal padding
+                  SizedBox(height: screenWidth * 0.05), 
+                  Center(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        padding: EdgeInsets.symmetric(
+                          vertical: screenWidth * 0.03, 
+                          horizontal: screenWidth * 0.1, 
+                        ),
                       ),
-                    ),
-                    onPressed: isInCart ? null : () => cartNotifier.addToCart(product),
-                    child: Text(
-                      isInCart ? "Already in Cart" : "Add to Cart",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: screenWidth * 0.045, // Responsive font size
+                      onPressed: isInCart ? null : () => cartNotifier.addToCart(product),
+                      child: Text(
+                        isInCart ? "Already in Cart" : "Add to Cart",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: screenWidth * 0.035, 
+                        ),
                       ),
                     ),
                   ),
