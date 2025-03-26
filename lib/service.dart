@@ -15,7 +15,7 @@ class ProductService {
         throw Exception('Failed to load products - Status Code: ${response.statusCode}');
       }
     } catch (e) {
-      print("Error fetching products: $e"); // Debugging
+      print("Error fetching products: $e"); 
       throw Exception('Error fetching products: $e'); 
     }
   }

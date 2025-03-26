@@ -21,13 +21,13 @@ class CartScreen extends ConsumerWidget {
         title: Text(
           "Cart",
           style: TextStyle(
-            fontSize: screenWidth * 0.06, // Responsive font size
+            fontSize: screenWidth * 0.06, 
           ),
         ),
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            size: screenWidth * 0.06, // Responsive icon size
+            size: screenWidth * 0.06, 
           ),
           onPressed: () => Navigator.pop(context),
         ),
@@ -40,7 +40,7 @@ class CartScreen extends ConsumerWidget {
                     child: Text(
                       "Your cart is empty",
                       style: TextStyle(
-                        fontSize: screenWidth * 0.05, // Responsive font size
+                        fontSize: screenWidth * 0.05, 
                       ),
                     ),
                   )
@@ -49,20 +49,18 @@ class CartScreen extends ConsumerWidget {
                     itemBuilder: (context, index) {
                       final product = cart[index];
                       return Card(
-                        margin: EdgeInsets.all(screenWidth * 0.03), // Responsive margin
+                        margin: EdgeInsets.all(screenWidth * 0.03), 
                         child: Padding(
-                          padding: EdgeInsets.all(screenWidth * 0.03), // Responsive padding
+                          padding: EdgeInsets.all(screenWidth * 0.03), 
                           child: Row(
                             children: [
-                              // Product Image
                               Image.network(
                                 product.thumbnail,
-                                width: screenWidth * 0.2, // Responsive width
-                                height: screenWidth * 0.2, // Responsive height
+                                width: screenWidth * 0.2,
+                                height: screenWidth * 0.2, 
                                 fit: BoxFit.cover,
                               ),
-                              SizedBox(width: screenWidth * 0.03), // Responsive spacing
-                              // Product Details
+                              SizedBox(width: screenWidth * 0.03), 
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,20 +69,20 @@ class CartScreen extends ConsumerWidget {
                                       product.title,
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: screenWidth * 0.045, // Responsive font size
+                                        fontSize: screenWidth * 0.045, 
                                       ),
                                     ),
                                     Text(
                                       product.brand,
                                       style: TextStyle(
                                         color: Colors.grey,
-                                        fontSize: screenWidth * 0.035, // Responsive font size
+                                        fontSize: screenWidth * 0.035,
                                       ),
                                     ),
                                     Text(
                                       "₹${(product.price * (1 - product.discountPercentage / 100)).toStringAsFixed(2)}",
                                       style: TextStyle(
-                                        fontSize: screenWidth * 0.04, // Responsive font size
+                                        fontSize: screenWidth * 0.04, 
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -92,7 +90,7 @@ class CartScreen extends ConsumerWidget {
                                       "${product.discountPercentage}% OFF",
                                       style: TextStyle(
                                         color: Colors.red,
-                                        fontSize: screenWidth * 0.035, // Responsive font size
+                                        fontSize: screenWidth * 0.035, 
                                       ),
                                     ),
                                     Row(
@@ -100,12 +98,12 @@ class CartScreen extends ConsumerWidget {
                                         Icon(
                                           Icons.star,
                                           color: Colors.amber,
-                                          size: screenWidth * 0.04, // Responsive icon size
+                                          size: screenWidth * 0.04, 
                                         ),
                                         Text(
                                           product.rating.toString(),
                                           style: TextStyle(
-                                            fontSize: screenWidth * 0.035, // Responsive font size
+                                            fontSize: screenWidth * 0.035, 
                                           ),
                                         ),
                                       ],
@@ -113,13 +111,12 @@ class CartScreen extends ConsumerWidget {
                                   ],
                                 ),
                               ),
-                              // Quantity Controls
                               Row(
                                 children: [
                                   IconButton(
                                     icon: Icon(
                                       Icons.remove,
-                                      size: screenWidth * 0.05, // Responsive icon size
+                                      size: screenWidth * 0.05, 
                                     ),
                                     onPressed: () => cartNotifier.decreaseQuantity(product),
                                   ),
@@ -145,14 +142,13 @@ class CartScreen extends ConsumerWidget {
                     },
                   ),
           ),
-          // Total Price and Checkout Button
           Container(
-            padding: EdgeInsets.all(screenWidth * 0.04), // Responsive padding
+            padding: EdgeInsets.all(screenWidth * 0.04), 
             decoration: BoxDecoration(
               color: const Color(0xFFF8D7DA),
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(screenWidth * 0.05), // Responsive radius
-                topRight: Radius.circular(screenWidth * 0.05), // Responsive radius
+                topLeft: Radius.circular(screenWidth * 0.05), 
+                topRight: Radius.circular(screenWidth * 0.05), 
               ),
             ),
             child: Column(
@@ -163,26 +159,26 @@ class CartScreen extends ConsumerWidget {
                     Text(
                       "Total Price",
                       style: TextStyle(
-                        fontSize: screenWidth * 0.05, // Responsive font size
+                        fontSize: screenWidth * 0.05, 
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
                       "₹${totalPrice.toStringAsFixed(2)}",
                       style: TextStyle(
-                        fontSize: screenWidth * 0.05, // Responsive font size
+                        fontSize: screenWidth * 0.05, 
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: screenWidth * 0.03), // Responsive spacing
+                SizedBox(height: screenWidth * 0.03), 
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red,
                     padding: EdgeInsets.symmetric(
-                      vertical: screenWidth * 0.03, // Responsive vertical padding
-                      horizontal: screenWidth * 0.1, // Responsive horizontal padding
+                      vertical: screenWidth * 0.03, 
+                      horizontal: screenWidth * 0.1, 
                     ),
                   ),
                   onPressed: () {
@@ -193,7 +189,7 @@ class CartScreen extends ConsumerWidget {
                   child: Text(
                     "Check Out (${cart.length})",
                     style: TextStyle(
-                      fontSize: screenWidth * 0.045, // Responsive font size
+                      fontSize: screenWidth * 0.045, 
                       color: Colors.white,
                     ),
                   ),
@@ -206,7 +202,6 @@ class CartScreen extends ConsumerWidget {
     );
   }
 
-  // Function to show a confirmation dialog before checkout
   void _showCheckoutDialog(BuildContext context, CartNotifier cartNotifier) {
     showDialog(
       context: context,
@@ -221,8 +216,8 @@ class CartScreen extends ConsumerWidget {
             ),
             TextButton(
               onPressed: () {
-                cartNotifier.clearCart(); // Clear the cart
-                Navigator.pop(context); // Close the dialog
+                cartNotifier.clearCart(); 
+                Navigator.pop(context); 
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text("Checkout successful! Your cart is now empty.")),
                 );

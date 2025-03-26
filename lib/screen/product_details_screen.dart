@@ -14,7 +14,6 @@ class ProductDetailsScreen extends ConsumerWidget {
     final cart = ref.watch(cartProvider);
     final isInCart = cart.any((p) => p.id == product.id);
 
-    // Get screen dimensions
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
@@ -24,7 +23,7 @@ class ProductDetailsScreen extends ConsumerWidget {
           product.title,
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: screenWidth * 0.05, // Responsive font size
+            fontSize: screenWidth * 0.05, 
           ),
         ),
         backgroundColor: Colors.white,
@@ -35,29 +34,28 @@ class ProductDetailsScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Product Image with Thumbnails
             Container(
               color: Colors.white,
               child: Column(
                 children: [
                   SizedBox(
-                    height: screenHeight * 0.3, // Responsive height
+                    height: screenHeight * 0.3, 
                     width: double.infinity,
                     child: Image.network(product.thumbnail, fit: BoxFit.cover),
                   ),
                   SizedBox(
-                    height: screenHeight * 0.1, // Responsive height
+                    height: screenHeight * 0.1, 
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: product.images.map((image) {
                         return Padding(
-                          padding: EdgeInsets.all(screenWidth * 0.02), // Responsive padding
+                          padding: EdgeInsets.all(screenWidth * 0.02), 
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(screenWidth * 0.02), // Responsive border radius
+                            borderRadius: BorderRadius.circular(screenWidth * 0.02), 
                             child: Image.network(
                               image,
-                              width: screenWidth * 0.15, // Responsive width
-                              height: screenWidth * 0.15, // Responsive height
+                              width: screenWidth * 0.15, 
+                              height: screenWidth * 0.15, 
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -192,24 +190,23 @@ class ProductDetailsScreen extends ConsumerWidget {
     );
   }
 
-  // Helper method for additional info rows
   Widget _buildInfoRow(String title, String value, double screenWidth) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: screenWidth * 0.01), // Responsive padding
+      padding: EdgeInsets.symmetric(vertical: screenWidth * 0.01), 
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             title,
             style: TextStyle(
-              fontSize: screenWidth * 0.04, // Responsive font size
+              fontSize: screenWidth * 0.04, 
               fontWeight: FontWeight.bold,
             ),
           ),
           Text(
             value,
             style: TextStyle(
-              fontSize: screenWidth * 0.04, // Responsive font size
+              fontSize: screenWidth * 0.04,
               color: Colors.grey,
             ),
           ),

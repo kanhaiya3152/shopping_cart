@@ -41,15 +41,13 @@ class Product {
     this.quantity = 1,
   });
 
-  /// **Calculate Discounted Price**
   double get discountedPrice {
     return price * (1 - discountPercentage / 100);
   }
 
-  // Factory method to parse JSON
   factory Product.fromJson(Map<String, dynamic> json) {
   return Product(
-    id: json['id'] ?? 0,  // ✅ Default value for null
+    id: json['id'] ?? 0,  // Default value for null
     title: json['title'] ?? 'Unknown Product',
     description: json['description'] ?? 'No description available',
     category: json['category'] ?? 'Unknown Category',

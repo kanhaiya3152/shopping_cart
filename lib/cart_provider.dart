@@ -12,7 +12,7 @@ class CartNotifier extends StateNotifier<List<Product>> {
   void addToCart(Product product) {
     state = state.map((p) {
       if (p.id == product.id) {
-        return p.copyWith(quantity: p.quantity + 1); // Increase quantity if already in cart
+        return p.copyWith(quantity: p.quantity + 1); 
       }
       return p;
     }).toList();
@@ -34,12 +34,12 @@ class CartNotifier extends StateNotifier<List<Product>> {
   void decreaseQuantity(Product product) {
     state = state
         .map((p) => p.id == product.id ? p.copyWith(quantity: p.quantity - 1) : p)
-        .where((p) => p.quantity > 0) // Remove products with 0 quantity
+        .where((p) => p.quantity > 0) 
         .toList();
   }
 
   void clearCart() {
-    state = []; // Set the cart to an empty list
+    state = []; 
   }
 
   double get totalPrice => state.fold(
